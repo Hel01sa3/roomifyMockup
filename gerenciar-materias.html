@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="popup.css">
     <style>
         :root {
             --blue: #007BFF; --blue-dark: #0069D9; --bg-light: #F8F9FA; --bg-white: #FFFFFF;
@@ -48,9 +49,16 @@
         .data-table tr:last-child td { border-bottom: none; }
         .data-table th { color: var(--text-light); font-weight: 500; font-size: 0.9rem; text-transform: uppercase; }
         .actions-cell { text-align: right; }
-        .actions-cell button { background: none; border: none; cursor: pointer; color: var(--text-light); font-size: 1.25rem; margin-left: 1rem; transition: color 0.2s ease; }
-        .actions-cell button:hover { color: var(--blue); }
+        
+        /* Ajuste no CSS para suportar link e botão lado a lado */
+        .actions-cell a, .actions-cell button {
+            background: none; border: none; cursor: pointer; color: var(--text-light);
+            font-size: 1.25rem; margin-left: 1rem; transition: color 0.2s ease; text-decoration: none;
+            display: inline-block; /* Garante alinhamento */
+        }
+        .actions-cell a:hover { color: var(--blue); }
         .actions-cell button.delete:hover { color: var(--danger); }
+        
         @media (max-width: 992px) { .sidebar { display: none; } }
     </style>
 </head>
@@ -76,13 +84,69 @@
             <table class="data-table">
                 <thead><tr><th>Nome da Matéria</th><th>Curso</th><th>Período</th><th>Alunos</th><th style="text-align: right;">Ações</th></tr></thead>
                 <tbody>
-                    <tr><td>Bacteriologia Clínica</td><td>Biomedicina</td><td>7º</td><td>17</td><td class="actions-cell"><button><i class="ri-pencil-line"></i></button><button class="delete"><i class="ri-delete-bin-line"></i></button></td></tr>
-                    <tr><td>Farmacologia</td><td>Farmácia</td><td>5º</td><td>25</td><td class="actions-cell"><button><i class="ri-pencil-line"></i></button><button class="delete"><i class="ri-delete-bin-line"></i></button></td></tr>
-                    <tr><td>Probabilidade e Estatística</td><td>Engenharia Civil</td><td>3º</td><td>42</td><td class="actions-cell"><button><i class="ri-pencil-line"></i></button><button class="delete"><i class="ri-delete-bin-line"></i></button></td></tr>
-                    <tr><td>Teoria do Design</td><td>Design de Interiores</td><td>1º</td><td>30</td><td class="actions-cell"><button><i class="ri-pencil-line"></i></button><button class="delete"><i class="ri-delete-bin-line"></i></button></td></tr>
+                    <tr>
+                        <td>Bacteriologia Clínica</td>
+                        <td>Biomedicina</td>
+                        <td>7º</td>
+                        <td>17</td>
+                        <td class="actions-cell">
+                            <a href="editar-materia.html"><i class="ri-pencil-line"></i></a>
+                            <button class="delete"><i class="ri-delete-bin-line"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Farmacologia</td>
+                        <td>Farmácia</td>
+                        <td>5º</td>
+                        <td>25</td>
+                        <td class="actions-cell">
+                            <a href="editar-materia.html"><i class="ri-pencil-line"></i></a>
+                            <button class="delete"><i class="ri-delete-bin-line"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Probabilidade e Estatística</td>
+                        <td>Engenharia Civil</td>
+                        <td>3º</td>
+                        <td>42</td>
+                        <td class="actions-cell">
+                            <a href="editar-materia.html"><i class="ri-pencil-line"></i></a>
+                            <button class="delete"><i class="ri-delete-bin-line"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Teoria do Design</td>
+                        <td>Design de Interiores</td>
+                        <td>1º</td>
+                        <td>30</td>
+                        <td class="actions-cell">
+                            <a href="editar-materia.html"><i class="ri-pencil-line"></i></a>
+                            <button class="delete"><i class="ri-delete-bin-line"></i></button>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </main>
+    <script src="popup.js"></script>
+    <script>
+        const botoesDelete = document.querySelectorAll('.delete');
+
+        botoesDelete.forEach(botao => {
+            botao.addEventListener('click', function() {
+                const linha = botao.closest('tr');
+                const nomeMateria = linha.querySelector('td').innerText;
+
+                confirmarExclusao(
+                    "Excluir Matéria",
+                    `Deseja realmente apagar a disciplina de ${nomeMateria}?`,
+                    function() {
+                        linha.remove();
+                        mostrarSucesso("Matéria Removida", "A matéria foi removida da grade com sucesso.");
+                    }
+                );
+            });
+        });
+    </script>
 </body>
 </html>

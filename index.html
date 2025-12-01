@@ -331,5 +331,36 @@
         </table>
       </section>
     </main>
+    <!-- POPUP -->
+    <div
+      id="popupSucesso"
+      style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+        font-size: 18px;
+      "
+    >
+      ✔ Atribuição realizada com sucesso!
+    </div>
+
+    <script>
+      if (localStorage.getItem("atribSucesso")) {
+        let popup = document.getElementById("popupSucesso");
+        popup.style.display = "block";
+
+        // Remove o status para não aparecer sempre ao entrar na página
+        localStorage.removeItem("atribSucesso");
+
+        // Opcional: esconder após alguns segundos
+        setTimeout(() => (popup.style.display = "none"), 3000);
+      }
+    </script>
   </body>
 </html>

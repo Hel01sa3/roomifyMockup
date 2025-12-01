@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="popup.css">
     <style>
         :root {
             --blue: #007BFF; --blue-dark: #0069D9; --bg-light: #F8F9FA; --bg-white: #FFFFFF;
@@ -87,6 +88,25 @@
             </table>
         </div>
     </main>
+    <script src="popup.js"></script>
+<script>
+    const botoesDelete = document.querySelectorAll('.delete');
+
+    botoesDelete.forEach(botao => {
+        botao.addEventListener('click', function(event) {
+            const linha = botao.closest('tr');
+            const nomeSala = linha.querySelector('td').innerText;
+
+            confirmarExclusao(
+                "Excluir Sala", 
+                `Tem certeza que deseja remover a ${nomeSala}?`, 
+                function() {
+                    linha.remove();
+                    mostrarSucesso("Sucesso!", `A ${nomeSala} foi excluída.`);
+                }
+            );
+        });
+    });
+</script>
 </body>
 </html>
-
